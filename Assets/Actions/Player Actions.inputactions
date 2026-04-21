@@ -1,0 +1,34 @@
+{
+    "name": "Player Actions",
+    "maps": [
+        {
+            "name": "Player Controller Actions",
+            "id": "9b663362-899b-4466-8609-f795e87c2e82",
+            "actions": [
+                {
+                    "name": "PlaceObject",
+                    "type": "Button",
+                    "id": "02328650-0a56-4248-a559-b1917a7b400f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "69f0c4fa-8ce7-4ba4-be9e-dbd3841d80db",
+                    "path": "<XRController>{RightHand}/isTracked",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

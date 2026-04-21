@@ -4992,7 +4992,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d376240d064f4484e81824d51391caf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonClickActions: []
+  _buttonClickActions:
+  - Title: PlaceObject
+    Button: 0
+    ButtonMode: 0
+    InputActionReference: {fileID: -8936199347477285622, guid: 7a5a1bc7c89824a01a02aa86af288242, type: 3}
+    CallbackWithContext:
+      m_PersistentCalls:
+        m_Calls: []
+    Callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &945995554
 MonoBehaviour:
   m_ObjectHideFlags: 0
