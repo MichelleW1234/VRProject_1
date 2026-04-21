@@ -1,5 +1,5 @@
 using UnityEngine;
-using Unity.Engine.InputSystem;
+using UnityEngine.InputSystem;
 using Unity.Mathematics;
 
 public class Player : MonoBehaviour
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         GameObject newObject1 = GameObject.Find("Object1");
         Vector3 objectInitialPosition = transform.forward;
         Quaternion objectInitialRotation = quaternion.identity;
-        GameObject.Insantiate(newObject1, objectInitialPosition, objectInitialRotation);
+        GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
 
     }
 }
