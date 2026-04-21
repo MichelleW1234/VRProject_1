@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     private void PlaceFunction(InputAction.CallbackContext context)
     {
         
-        GameObject newObject1 = GameObject.Find("Object_1");
+        GameObject newObject1 = GameObject.Find("Object1");
         Vector3 objectInitialPosition = transform.forward;
         Quaternion objectInitialRotation = quaternion.identity;
         GameObject.Insantiate(newObject1, objectInitialPosition, objectInitialRotation);
