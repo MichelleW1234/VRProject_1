@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     {
         placeAction.action.performed += PlaceFunction;
         placeAction.action.Enable();
+        Debug.Log("PLAYER OnEnable is enabled");
+
 
     }
 
@@ -29,6 +31,8 @@ public class Player : MonoBehaviour
     {
         placeAction.action.performed -= PlaceFunction;
         placeAction.action.Disable();
+        Debug.Log("PLAYER OnDisable is enabled");
+
 
     }
 
@@ -36,6 +40,7 @@ public class Player : MonoBehaviour
     {
         
         GameObject newObject1 = GameObject.Find("Object1");
+        Debug.Log("OBJECT1 is created");
         Vector3 objectInitialPosition = transform.forward;
         Quaternion objectInitialRotation = quaternion.identity;
         GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);

@@ -19,7 +19,7 @@
                 {
                     "name": "",
                     "id": "69f0c4fa-8ce7-4ba4-be9e-dbd3841d80db",
-                    "path": "<XRController>{RightHand}/isTracked",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
