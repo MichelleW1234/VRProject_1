@@ -5,62 +5,71 @@ public class RayIndicator : MonoBehaviour
 {
     public Transform rayOrigin;
     public LineRenderer line;
-    public Transform hitMarker;
+    public InputActionReference triggerAction;
     public float maxDistance = 10f;
 
-    private SelectableObject currentHover;
-    private SelectableObject currentSelected;
+    private GameObject currentHover;
+    private GameObject currentSelected;
+    private Renderer hoverRenderer;
+    private Renderer selecedRenderer;
 
+    void OnEnable() 
+    {
+        triggerAction.action.Enable();
+    }
+
+    void OnDisable() 
+    {
+        triggerAction.action.Disable();
+    }
+    
     void Update()
     {
         Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
         RaycastHit hit;
-
         Vector3 endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
-        SelectableObject newHover = null;
+        
+        if (currentHover != null && currentHover != currentSelected && hoverRenderer != null)
+        {
+            hoverRenderer.material.color = Color.white; //change hover color
+        }
+
+        currentHoever = null;
+        hoverRenderer = null;
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
             endPoint = hit.point;
 
-            // move hit marker
-            if (hitMarker != null)
+            if (hit.collider.GetComponentInParent<Grabbable>() != null)
             {
-                hitMarker.position = hit.point;
-                hitMarker.gameObject.SetActive(true);
+                currentHover = hit.collider.gameObject;
+                hoverRenderer = currentHover.GetComponent<Renderer>();
+
+                if (currentHover != currentSelected && hoverRenderer != null)
+                {
+                    hoverRenderer.material.color = Color.yellow;
+                }
             }
-
-            newHover = hit.collider.GetComponentInParent<SelectableObject>();
-        }
-        else
-        {
-            if (hitMarker != null)
-                hitMarker.gameObject.SetActive(false);
         }
 
-        // update line
         line.SetPosition(0, rayOrigin.position);
         line.SetPosition(1, endPoint);
 
-        // hover highlight
-        if (currentHover != null && currentHover != currentSelected)
-            currentHover.SetHighlight(false);
-
-        currentHover = newHover;
-
-        if (currentHover != null && currentHover != currentSelected)
-            currentHover.SetHighlight(true);
-
-        // trigger input (OVR version example)
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (triggerAction.action.WasPressedThisFrame()) 
         {
-            if (currentSelected != null)
-                currentSelected.SetSelected(false);
-
-            if (currentHover != null)
+            if (currentSelected != null && selectedRenderer != null) 
             {
-                currentSelected = currentHover;
-                currentSelected.SetSelected(true);
+                selectedRenderer.material.color = Color.white;
+            }
+            currentSelected = currentHover;
+            if (currentSelected != null)
+            {
+                selectedRenderer = currentSelected.GetComponenet<Rederer>();
+                if (selectedRenderer != null)
+                {
+                    selectedRenderer.material.color = Color.yellow;
+                }
             }
         }
     }
