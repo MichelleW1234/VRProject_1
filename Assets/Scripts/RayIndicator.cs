@@ -52,6 +52,7 @@ public class RayIndicator : MonoBehaviour
             Debug.Log("Normal: " + hit.normal);
 
             //Checking if the hit object is interactable (Comment this part out)
+            /*
             if (hit.collider.GetComponentInParent<Grabbable>() != null)
             {
                 currentHover = hit.collider.gameObject;
@@ -64,6 +65,8 @@ public class RayIndicator : MonoBehaviour
                 }
 
             }
+            */
+
         }
 
         //Adjusts visible line to match ray
