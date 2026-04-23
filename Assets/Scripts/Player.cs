@@ -4,6 +4,7 @@ using Unity.Mathematics;
 
 public class Player : MonoBehaviour
 {
+    public RayIndicator rayCastInfo;
     public InputActionReference placeAction;
     public Vector3 playerPosition;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
         
         GameObject newObject1 = GameObject.Find("Object1");
         Debug.Log("OBJECT1 is created");
-        Vector3 objectInitialPosition = transform.forward;
+        Vector3 objectInitialPosition = rayCastInfo.hit.point;
         Quaternion objectInitialRotation = quaternion.identity;
         GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
 

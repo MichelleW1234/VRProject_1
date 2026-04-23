@@ -7,6 +7,8 @@ public class RayIndicator : MonoBehaviour
     public LineRenderer line;
     public InputActionReference triggerAction;
     public float maxDistance = 10f;
+    public RaycastHit hit;
+
 
     private GameObject currentHover;
     private GameObject currentSelected;
@@ -28,7 +30,7 @@ public class RayIndicator : MonoBehaviour
         // Variable for new ray (actual ray itself)
         Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
         // Variable to store the new ray data upon hit
-        RaycastHit hit;
+       // RaycastHit hit;
         // Variable for the endpoint of the ray (where it lands)
         Vector3 endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
 
