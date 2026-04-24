@@ -32,29 +32,6 @@ public class RayIndicator : MonoBehaviour
         currentHover = null;
         hoverRenderer = null;
 
-        // Checks if ray is hitting any object
-        if (Physics.Raycast(ray, out hit, maxDistance))
-        {
-            endPoint = hit.point;
-
-            //Checking if the hit object is interactable (Comment this part out)
-            
-            if (hit.collider.GetComponentInParent<Grabbable>() != null)
-            {
-                currentHover = hit.collider.gameObject;
-                hoverRenderer = currentHover.GetComponent<Renderer>();
-
-                //Setting selected object color
-                if (currentHover != currentSelected && hoverRenderer != null)
-                {
-                    hoverRenderer.material.color = Color.yellow;
-                }
-
-            }
-           
-
-        }
-
         //Adjusts visible line to match ray
         line.SetPosition(0, rayOrigin.position);
         line.SetPosition(1, endPoint);
