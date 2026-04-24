@@ -16,12 +16,9 @@ public class RayIndicator : MonoBehaviour
     
     void Update()
     {
-        line.SetPosition(0, transform.position); //sets line position on the gameobject (right controller)
-
         // Variable for new ray (actual ray itself)
         Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
-        // Variable to store the new ray data upon hit
-        //RaycastHit hit;
+
         // Variable for the endpoint of the ray (where it lands)
         Vector3 endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
 
@@ -39,13 +36,9 @@ public class RayIndicator : MonoBehaviour
         {
             endPoint = hit.point;
 
-            Debug.Log("Hit object: " + hit.collider.gameObject.name);
-            Debug.Log("Hit point: " + hit.point);
-            Debug.Log("Distance: " + hit.distance);
-            Debug.Log("Normal: " + hit.normal);
-
             //Checking if the hit object is interactable (Comment this part out)
-            /*
+            
+            /**
             if (hit.collider.GetComponentInParent<Grabbable>() != null)
             {
                 currentHover = hit.collider.gameObject;
@@ -59,6 +52,7 @@ public class RayIndicator : MonoBehaviour
 
             }
             */
+           
 
         }
 
@@ -69,7 +63,6 @@ public class RayIndicator : MonoBehaviour
         //Checks trigger button was pressed
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
-            Debug.Log("Trigger button on right controller pressed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             // Resetting color for previously selected object
             if (currentSelected != null && selectedRenderer != null) 
             {
