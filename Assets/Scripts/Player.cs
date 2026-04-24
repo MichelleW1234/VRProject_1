@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-
         //Checks trigger button was pressed
         if (OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger))
         {
@@ -41,7 +40,34 @@ public class Player : MonoBehaviour
                     rayCastInfo.selectedRenderer.material.color = Color.yellow;
                 }
             }
+
+
+            // Checks if ray is hitting any object
+            if (Physics.Raycast(rayCastInfo.ray, out rayCastInfo.hit, rayCastInfo.maxDistance))
+            {
+                rayCastInfo.endPoint = rayCastInfo.hit.point;
+
+                //Checking if the hit object is interactable (Comment this part out)
+                
+                if (rayCastInfo.hit.collider.GetComponentInParent<Grabbable>() != null)
+                {
+                    rayCastInfo.currentHover = rayCastInfo.hit.collider.gameObject;
+                    rayCastInfo.hoverRenderer = rayCastInfo.currentHover.GetComponent<Renderer>();
+
+                    //Setting selected object color
+                    if (rayCastInfo.currentHover != rayCastInfo.currentSelected && rayCastInfo.hoverRenderer != null)
+                    {
+                        rayCastInfo.hoverRenderer.material.color = Color.yellow;
+                    }
+
+                }
+            
+
+            }
+
         }
+
+
 
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
@@ -53,6 +79,8 @@ public class Player : MonoBehaviour
             GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
 
         }
+
+
 
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
