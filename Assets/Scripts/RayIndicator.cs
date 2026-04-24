@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Oculus.Interaction;
 
 public class RayIndicator : MonoBehaviour
 {
@@ -38,7 +39,6 @@ public class RayIndicator : MonoBehaviour
 
             //Checking if the hit object is interactable (Comment this part out)
             
-            /**
             if (hit.collider.GetComponentInParent<Grabbable>() != null)
             {
                 currentHover = hit.collider.gameObject;
@@ -51,7 +51,6 @@ public class RayIndicator : MonoBehaviour
                 }
 
             }
-            */
            
 
         }
@@ -60,25 +59,5 @@ public class RayIndicator : MonoBehaviour
         line.SetPosition(0, rayOrigin.position);
         line.SetPosition(1, endPoint);
 
-        //Checks trigger button was pressed
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
-        {
-            // Resetting color for previously selected object
-            if (currentSelected != null && selectedRenderer != null) 
-            {
-                selectedRenderer.material.color = Color.white;
-            }
-
-            // Setting color for current selected object
-            currentSelected = currentHover;
-            if (currentSelected != null)
-            {
-                selectedRenderer = currentSelected.GetComponent<Renderer>();
-                if (selectedRenderer != null)
-                {
-                    selectedRenderer.material.color = Color.yellow;
-                }
-            }
-        }
     }
 }
