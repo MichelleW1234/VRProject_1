@@ -5,32 +5,23 @@ public class RayIndicator : MonoBehaviour
 {
     public Transform rayOrigin;
     public LineRenderer line;
-    public InputActionReference triggerAction;
     public float maxDistance = 10f;
     public RaycastHit hit;
-
 
     private GameObject currentHover;
     private GameObject currentSelected;
     private Renderer hoverRenderer;
     private Renderer selectedRenderer;
 
-    void OnEnable() 
-    {
-        triggerAction.action.Enable();
-    }
-
-    void OnDisable() 
-    {
-        triggerAction.action.Disable();
-    }
     
     void Update()
     {
+        line.SetPosition(0, transform.position); //sets line position on the gameobject (right controller)
+
         // Variable for new ray (actual ray itself)
         Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
         // Variable to store the new ray data upon hit
-       // RaycastHit hit;
+        //RaycastHit hit;
         // Variable for the endpoint of the ray (where it lands)
         Vector3 endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
 
@@ -76,8 +67,9 @@ public class RayIndicator : MonoBehaviour
         line.SetPosition(1, endPoint);
 
         //Checks trigger button was pressed
-        if (triggerAction.action.WasPressedThisFrame()) 
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
+            Debug.Log("Trigger button on right controller pressed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             // Resetting color for previously selected object
             if (currentSelected != null && selectedRenderer != null) 
             {

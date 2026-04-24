@@ -23,8 +23,6 @@ public class Player : MonoBehaviour
     {
         placeAction.action.performed += PlaceFunction;
         placeAction.action.Enable();
-        Debug.Log("PLAYER OnEnable is enabled");
-
 
     }
 
@@ -32,16 +30,14 @@ public class Player : MonoBehaviour
     {
         placeAction.action.performed -= PlaceFunction;
         placeAction.action.Disable();
-        Debug.Log("PLAYER OnDisable is enabled");
-
 
     }
 
     private void PlaceFunction(InputAction.CallbackContext context)
     {
         
-        GameObject newObject1 = GameObject.Find("Object1");
-        Debug.Log("OBJECT1 is created");
+        GameObject newObject1 = GameObject.Find("chair");
+        Debug.Log("chair is created");
         Vector3 objectInitialPosition = rayCastInfo.hit.point;
         Quaternion objectInitialRotation = quaternion.identity;
         GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
