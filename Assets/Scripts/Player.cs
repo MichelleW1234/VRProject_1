@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using Unity.XR.CoreUtils;
 
 public class Player : MonoBehaviour
 {
     public RayIndicator rayCastInfo;
     public InputActionReference placeAction;
-    public Vector3 playerPosition;
+    public InputActionReference teleportAction;
+
+    public GameObject playerPOV;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,12 +29,18 @@ public class Player : MonoBehaviour
         placeAction.action.performed += PlaceFunction;
         placeAction.action.Enable();
 
+        teleportAction.action.performed += TeleportFunction;
+        teleportAction.action.Enable();
+
     }
 
     private void OnDisable()
     {
         placeAction.action.performed -= PlaceFunction;
         placeAction.action.Disable();
+
+        teleportAction.action.performed += TeleportFunction;
+        teleportAction.action.Enable();
 
     }
 
@@ -43,4 +54,13 @@ public class Player : MonoBehaviour
         GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
 
     }
+    
+    private void TeleportFunction(InputAction.CallbackContext context)
+    {
+
+        playerPOV.transform.localPosition = rayCastInfo.hit.point;
+
+    }
+    
+
 }
