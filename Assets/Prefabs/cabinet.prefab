@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.529
+      value: -1.057
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.653
+      value: -0.654
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.329
+      value: 0.085
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -119,9 +119,6 @@ PrefabInstance:
       addedObject: {fileID: 2681864819393990220}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8231126946740382929}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1988356964180105166}
   m_SourcePrefab: {fileID: 100100000, guid: 165463d3e303f480e97f475c2660e6b4, type: 3}
 --- !u!1 &3141101939119428178 stripped
@@ -201,22 +198,7 @@ MonoBehaviour:
   _useClosestPointAsGrabSource: 0
   _releaseDistance: 0
   _resetGrabOnGrabsUpdated: 1
-  _physicsGrabbable: {fileID: 8231126946740382929}
---- !u!114 &8231126946740382929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3141101939119428178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bedaac29a943f844a7074b53c8bdf9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pointable: {fileID: 8111475281615643216}
-  _rigidbody: {fileID: 570907648839741161}
-  _scaleMassWithSize: 1
+  _physicsGrabbable: {fileID: 0}
 --- !u!65 &1988356964180105166
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -236,5 +218,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 11.722126, y: 11.014628, z: 5.32207}
-  m_Center: {x: 5.9375615, y: -0.8353097, z: 1.8462064}
+  m_Size: {x: 11.722126, y: 11.014628, z: 3.8046167}
+  m_Center: {x: 5.9375615, y: -0.83530957, z: 2.6049333}

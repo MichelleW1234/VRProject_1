@@ -8,33 +8,32 @@ public class RayIndicator : MonoBehaviour
     public LineRenderer line;
     public float maxDistance = 10f;
     public RaycastHit hit;
+    public bool hasHit;
 
-    private GameObject currentHover;
-    private GameObject currentSelected;
-    private Renderer hoverRenderer;
-    private Renderer selectedRenderer;
-
+    public Ray ray;
+    public Vector3 endPoint;
     
     void Update()
     {
         // Variable for new ray (actual ray itself)
-        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
+        ray = new Ray(rayOrigin.position, rayOrigin.forward);
 
         // Variable for the endpoint of the ray (where it lands)
-        Vector3 endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
+        endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
 
-        // Resetting any previous selected/hovered objects
-        if (currentHover != null && currentHover != currentSelected && hoverRenderer != null)
+
+        hasHit = Physics.Raycast(ray, out hit, maxDistance);
+        if (hasHit)
         {
-            hoverRenderer.material.color = Color.white; //change hover color
+            endPoint = hit.point;
         }
-
-        currentHover = null;
-        hoverRenderer = null;
+   
 
         //Adjusts visible line to match ray
         line.SetPosition(0, rayOrigin.position);
         line.SetPosition(1, endPoint);
 
     }
+
+
 }
