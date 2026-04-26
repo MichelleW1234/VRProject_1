@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayCastInfo: {fileID: 2126375326}
+  L_rayCastInfo: {fileID: 0}
   playerPOV: {fileID: 331117502}
 --- !u!1 &971413170
 GameObject:
