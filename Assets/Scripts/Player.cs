@@ -116,6 +116,17 @@ public class Player : MonoBehaviour
         {
 
             //edited
+            if (rayCastInfo.hit.name.Contains("SM-M-Floor"))
+            {
+                
+                playerPOV.transform.localPosition = rayCastInfo.hit.point;
+
+            } else
+            {
+                Debug.Log("Unable to proceed!!");
+
+            }
+            /*
             if (rayCastInfo.hit.point.y == 0)
             {
                 
@@ -126,6 +137,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Unable to proceed!!");
 
             }
+            */
 
         }
 
