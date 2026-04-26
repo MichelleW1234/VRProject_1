@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+
+    public GameObject SpawnMenu;
     public RayIndicator rayCastInfo;
     public GameObject playerPOV;
 
@@ -22,7 +24,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -83,17 +85,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandleMenu()
+    {
+        
+        // Figure out what player should do to trigger menu
+        SpawnMenu.SetActive(true);
+
+    }
+
     private void HandleSpawn()
     {
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
 
-            GameObject newObject1 = GameObject.Find("chair");
-            Debug.Log("chair is created");
-            Vector3 objectInitialPosition = rayCastInfo.hit.point;
+            GameObject currObject = SpawnMenu.GetComponent<SpawnMenu>().activeMenuOption;
+            Vector3 objectInitialPosition =  new Vector3(
+                                                rayCastInfo.hit.point.x,
+                                                rayCastInfo.hit.point.y + currObject.transform.position.y,
+                                                rayCastInfo.hit.point.z
+                                            );
             Quaternion objectInitialRotation = quaternion.identity;
-            GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
-
+            GameObject.Instantiate(currObject, objectInitialPosition, objectInitialRotation);
+ 
         }
     }
 
@@ -102,7 +115,17 @@ public class Player : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
 
-            playerPOV.transform.localPosition = rayCastInfo.hit.point;
+            //edited
+            if (rayCastInfo.hit.point.y == 0)
+            {
+                
+                playerPOV.transform.localPosition = rayCastInfo.hit.point;
+
+            } else
+            {
+                Debug.Log("Unable to proceed!!");
+
+            }
 
         }
 
