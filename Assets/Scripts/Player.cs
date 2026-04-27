@@ -1,13 +1,16 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using Unity.Mathematics;
-using Unity.XR.CoreUtils;
 using Oculus.Interaction;
 using System.Collections.Generic;
+using System.Net;
+using Unity.Mathematics;
+using Unity.XR.CoreUtils;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class Player : MonoBehaviour
 {
+
+    public GameObject Menu;
     public RayIndicator rayCastInfo;
     public RayIndicator L_rayCastInfo; //gets left controller raycast info for moving objects
 
@@ -155,17 +158,40 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandleMenu()
+    {
+        
+        // Figure out what player should do to trigger menu
+        Menu.SetActive(true);
+
+    }
+
     private void HandleSpawn()
     {
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
+            if (rayCastInfo == null)
+            {
+                Debug.LogError("rayCastInfo is not assigned in Player Inspector.");
+                return;
+            }
 
-            GameObject newObject1 = GameObject.Find("chair");
-            Debug.Log("chair is created");
-            Vector3 objectInitialPosition = rayCastInfo.hit.point;
-            Quaternion objectInitialRotation = quaternion.identity;
-            GameObject.Instantiate(newObject1, objectInitialPosition, objectInitialRotation);
+            if (!rayCastInfo.hasHit || rayCastInfo.hit.collider == null)
+            {
+                Debug.Log("ray is not hitting anything.");
+                return;
+            }
 
+            GameObject currObject = Menu.GetComponent<SpawnMenu>().activeMenuOption;
+
+            Vector3 objectInitialPosition =  new Vector3(
+                                                rayCastInfo.hit.point.x,
+                                                rayCastInfo.hit.point.y + 1f,
+                                                rayCastInfo.hit.point.z
+                                            );
+            Quaternion objectInitialRotation = currObject.transform.rotation;
+            GameObject.Instantiate(currObject, objectInitialPosition, objectInitialRotation);
+ 
         }
     }
 
@@ -175,11 +201,33 @@ public class Player : MonoBehaviour
 
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && (!rightGrip))
         {
+            
+            if (L_rayCastInfo == null)
+            {
+                Debug.LogError("L_rayCastInfo is not assigned in Player Inspector.");
+                return;
+            }
 
-            playerPOV.transform.localPosition = rayCastInfo.hit.point;
+            if (!L_rayCastInfo.hasHit || L_rayCastInfo.hit.collider == null)
+            {
+                Debug.Log("Left ray is not hitting anything.");
+                return;
+            }
+            
+            GameObject hitObject = L_rayCastInfo.hit.collider.gameObject;
 
+            Debug.Log("Left ray hit: " + hitObject.name);
+            Debug.Log("Left ray hit tag: " + hitObject.tag);
+
+            if (hitObject.CompareTag("TentFloor"))
+            {
+                playerPOV.transform.localPosition = L_rayCastInfo.hit.point;
+            }
+            else
+            {
+                Debug.Log("Unable to proceed!! Hit object: " + hitObject.name);
+            }
         }
-
     }
 
     private void HandleMoveSelected()

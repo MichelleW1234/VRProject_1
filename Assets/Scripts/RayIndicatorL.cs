@@ -1,33 +1,35 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RayIndicatorL : MonoBehaviour
 {
     public Transform rayOrigin;
     public LineRenderer line;
     public float maxDistance = 10f;
-    public RaycastHit hit;
 
+    public RaycastHit hit;
+    public bool hasHit;
+
+    public Ray ray;
+    public Vector3 endPoint;
 
     void Update()
     {
-        // Variable for new ray (actual ray itself)
-        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
-
-        // Variable for the endpoint of the ray (where it lands)
-        Vector3 endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
-
-
-        // Checks if ray is hitting any object
-        if (Physics.Raycast(ray, out hit, maxDistance))
+        if (rayOrigin == null || line == null)
         {
-            endPoint = hit.point;
-
+            return;
         }
 
-        //Adjusts visible line to match ray
+        ray = new Ray(rayOrigin.position, rayOrigin.forward);
+        endPoint = rayOrigin.position + rayOrigin.forward * maxDistance;
+
+        hasHit = Physics.Raycast(ray, out hit, maxDistance);
+
+        if (hasHit)
+        {
+            endPoint = hit.point;
+        }
+
         line.SetPosition(0, rayOrigin.position);
         line.SetPosition(1, endPoint);
-
     }
 }
