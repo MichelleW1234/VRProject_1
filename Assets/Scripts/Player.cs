@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     public GameObject Menu;
     public RayIndicator rayCastInfo;
-    public RayIndicator L_rayCastInfo; //gets left controller raycast info for moving objects
+    public RayIndicatorL L_rayCastInfo; //gets left controller raycast info for moving objects
 
     public GameObject playerPOV;
 

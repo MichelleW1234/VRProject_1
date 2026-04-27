@@ -303,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Menu: {fileID: 851472795}
   rayCastInfo: {fileID: 2126375326}
-  L_rayCastInfo: {fileID: 0}
+  L_rayCastInfo: {fileID: 1052319708}
   playerPOV: {fileID: 331117502}
 --- !u!1 &851472795 stripped
 GameObject:
