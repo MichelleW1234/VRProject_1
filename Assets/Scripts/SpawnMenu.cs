@@ -5,11 +5,15 @@ public class SpawnMenu : MonoBehaviour
 
     public RayIndicator currentRay;
     public GameObject activeMenuOption;
+    public GameObject chairPrefab;
+    public GameObject cabinetPrefab;
+    public GameObject LockerPrefab;
+
 
 
     void Start()
     {
-        activeMenuOption = GameObject.Find("chair");
+
     }
 
     void Update()
@@ -17,22 +21,35 @@ public class SpawnMenu : MonoBehaviour
             
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
+            gameObject.SetActive(true);
+            Debug.Log("A button is clicked");
 
-            Collider chairCollider = GameObject.Find("chairButton").GetComponent<Collider>();
-            Collider cabinetCollider = GameObject.Find("cabinetButton").GetComponent<Collider>();
+            Collider chairCollider = GameObject.Find("ChairButton").GetComponent<Collider>();
+            Collider cabinetCollider = GameObject.Find("CabinetButton").GetComponent<Collider>();
+            Collider lockerCollider = GameObject.Find("LockerButton").GetComponent<Collider>();
+
 
             if (chairCollider.ClosestPoint(currentRay.endPoint) == currentRay.endPoint)
             { //set chair to active
-                
-                activeMenuOption = GameObject.Find("chair");
+                Debug.Log("CHAIR IS ASSIGNED TO ACTIVE MENU");
+                activeMenuOption = chairPrefab;
 
-            } else if (cabinetCollider.ClosestPoint(currentRay.endPoint) == currentRay.endPoint)
+            } 
+            else if (cabinetCollider.ClosestPoint(currentRay.endPoint) == currentRay.endPoint)
             { // set cabinet to active
-                
-                activeMenuOption = GameObject.Find("cabinet");
+                Debug.Log("CABINET IS ASSIGNED TO ACTIVE MENU");
+
+                activeMenuOption = cabinetPrefab;
 
             }
-            
+            else if (lockerCollider.ClosestPoint(currentRay.endPoint) == currentRay.endPoint)
+            { // set cabinet to active
+                Debug.Log("LOCKER IS ASSIGNED TO ACTIVE MENU");
+
+                activeMenuOption = LockerPrefab;
+
+            }
+
             // close menu (outside of menu)
             gameObject.SetActive(false);
 

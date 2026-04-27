@@ -20,7 +20,10 @@ public class Player : MonoBehaviour
     private bool isGrabbable = false;
     private float grabbing_dist;
 
-    private float rotateSpeed = 60f; 
+    private float rotateSpeed = 60f;
+
+    private Rigidbody spawnHeldRb;
+    private GameObject spawnHeldObject;
 
     private GameObject currentHover;
     private GameObject currentSelected;
@@ -58,6 +61,8 @@ public class Player : MonoBehaviour
         HandleMoveSelected(); //hold right grip to move selected objects
         HandleScaleSelected();//both grip scale selected object
         HandleRotateSelected();
+
+        HandleMenu();
     }
 
     private void HandleOrientation()
@@ -66,8 +71,6 @@ public class Player : MonoBehaviour
 
         if (Mathf.Abs(rightThumbstick.x) > 0.1f)
         {
-            float rotateSpeed = 40f; 
-
             transform.Rotate(0f, rightThumbstick.x * rotateSpeed * Time.deltaTime, 0f);
         }
 
@@ -177,41 +180,93 @@ public class Player : MonoBehaviour
 
     private void HandleMenu()
     {
-        
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            if (Menu.activeSelf)
+            {
+                Menu.SetActive(false);
+
+            } else
+            {
+                Menu.SetActive(true);
+            }
+            
+
+        }
+
         // Figure out what player should do to trigger menu
-        Menu.SetActive(true);
 
     }
 
     private void HandleSpawn()
     {
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        if (!Menu.activeSelf)
         {
-            if (rayCastInfo == null)
+            if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
             {
-                Debug.LogError("rayCastInfo is not assigned in Player Inspector.");
-                return;
+                if (rayCastInfo == null)
+                {
+                    Debug.LogError("rayCastInfo is not assigned in Player Inspector.");
+                    return;
+                }
+
+                if (!rayCastInfo.hasHit || rayCastInfo.hit.collider == null)
+                {
+                    Debug.Log("ray is not hitting anything.");
+                    return;
+                }
+
+                GameObject currObject = Menu.GetComponent<SpawnMenu>().activeMenuOption;
+
+                Vector3 objectInitialPosition = new Vector3(
+                                                    rayCastInfo.hit.point.x,
+                                                    rayCastInfo.hit.point.y + 1f,
+                                                    rayCastInfo.hit.point.z
+                                                );
+                Quaternion objectInitialRotation = currObject.transform.rotation;
+
+                spawnHeldObject = GameObject.Instantiate(currObject, objectInitialPosition, objectInitialRotation);
+
+                spawnHeldRb = spawnHeldObject.GetComponent<Rigidbody>();
+                if (spawnHeldRb != null)
+                {
+                    spawnHeldRb.isKinematic = true;
+                }
+                Vector3 targetPos = rayCastInfo.rayOrigin.position + rayCastInfo.rayOrigin.forward
+                        * 2f;
+                spawnHeldObject.transform.position = targetPos;
+
             }
 
-            if (!rayCastInfo.hasHit || rayCastInfo.hit.collider == null)
+            if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger) && spawnHeldObject != null)
             {
-                Debug.Log("ray is not hitting anything.");
-                return;
+                Vector3 targetPos = rayCastInfo.rayOrigin.position
+                                    + rayCastInfo.rayOrigin.forward * 2f;
+
+                spawnHeldObject.transform.position = targetPos;
             }
 
-            GameObject currObject = Menu.GetComponent<SpawnMenu>().activeMenuOption;
+            if ((OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger)) &&
+                (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger) && spawnHeldObject != null))
+            {
+                spawnHeldObject.transform.Rotate(
+                    Vector3.up,
+                    rotateSpeed * Time.deltaTime,
+                    Space.World
+                );
+            }
 
-            Vector3 objectInitialPosition =  new Vector3(
-                                                rayCastInfo.hit.point.x,
-                                                rayCastInfo.hit.point.y + 1f,
-                                                rayCastInfo.hit.point.z
-                                            );
-            Quaternion objectInitialRotation = currObject.transform.rotation;
-            GameObject.Instantiate(currObject, objectInitialPosition, objectInitialRotation);
- 
+            if (OVRInput.GetUp(OVRInput.Button.SecondaryIndexTrigger))
+            {
+                spawnHeldRb.isKinematic = false;
+
+                spawnHeldObject = null;
+                spawnHeldRb = null;
+            }
         }
-    }
+        
 
+    }
     private void HandleTeleport()
     {
         bool rightGrip = OVRInput.Get(OVRInput.Button.SecondaryHandTrigger);
