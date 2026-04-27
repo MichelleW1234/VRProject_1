@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 
 public class Player : MonoBehaviour
@@ -44,6 +45,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleOrientation();
+
         HandleHighlight();
         HandleRightGripSelect(); //selects object (1st selection method)
         HandleLeftGripSelect(); //selects object (2nd selection method)
@@ -56,6 +59,20 @@ public class Player : MonoBehaviour
         HandleScaleSelected();//both grip scale selected object
         HandleRotateSelected();
     }
+
+    private void HandleOrientation()
+    {
+        Vector2 rightThumbstick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+
+        if (Mathf.Abs(rightThumbstick.x) > 0.1f)
+        {
+            float rotateSpeed = 40f; 
+
+            transform.Rotate(0f, rightThumbstick.x * rotateSpeed * Time.deltaTime, 0f);
+        }
+
+    }
+
 
     private void HandleHighlight()
     {
